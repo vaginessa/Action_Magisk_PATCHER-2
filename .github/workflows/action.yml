@@ -28,10 +28,12 @@ jobs:
           cd ${{ github.workspace }}
           mkdir out
           aria2c -s 10 -x 10 -d . -o firmware.zip "${{ github.event.inputs.rom_url }}"
+         
+          if [[ $(unzip -l firmware.zip | grep "boot.img") != "" ]];then
           unzip firmware.zip boot.img -d out
-          if [[ ! -f ./out/boot.img ]];then
+          else
           unzip firmware.zip
-           chmod +x ./payload-dumper-go
+          chmod +x ./payload-dumper-go
           ./payload-dumper-go -p boot payload.bin
           fi
          
