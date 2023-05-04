@@ -32,7 +32,7 @@ jobs:
           if [[ $(unzip -l firmware.zip | grep "boot.img") != "" ]];then
           unzip firmware.zip boot.img -d out
           else
-          unzip firmware.zip
+          unzip firmware.zip payload.bin -d ./
           chmod +x ./payload-dumper-go
           ./payload-dumper-go -p boot payload.bin
           fi
