@@ -28,15 +28,17 @@ jobs:
           cd ${{ github.workspace }}
           mkdir out
           aria2c -s 10 -x 10 -d . -o firmware.zip "${{ github.event.inputs.rom_url }}"
-          unzip firmware.zip
           unzip firmware.zip boot.img -d out
-          chmod +x ./payload-dumper-go
+          if [[ ! -f ./out/boot.img ]];then
+          unzip firmware.zip
+           chmod +x ./payload-dumper-go
           ./payload-dumper-go -p boot payload.bin
-          
+          fi
+         
       - name: 修补boot
         run: |
           cd ~
-          git clone https://github.com/xyazzrany/Magisk_patche.git Magisk
+          git clone https://github.com/xianwan1314/Magisk_patche.git Magisk
           cd Magisk
           mv ${{ github.workspace }}/out/* ./
           mkdir done
