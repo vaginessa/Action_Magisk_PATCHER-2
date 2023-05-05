@@ -28,7 +28,7 @@ jobs:
           cd ${{ github.workspace }}
           mkdir out
 
-          $aria2c -s 30 -x 16 -d . -i "${{ github.event.inputs.rom_url }}"  --file-allocation=falloc  -V true -c true
+          $aria2c -s 30 -x 16 -d . -i ${{ github.event.inputs.rom_url }}  --file-allocation=falloc  -V true -c true
          
           if [[ $(unzip -l firmware.zip | grep "boot.img") != "" ]];then
           unzip firmware.zip boot.img -d out
